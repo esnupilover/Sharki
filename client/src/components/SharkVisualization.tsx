@@ -34,7 +34,7 @@ const SharkVisualization: React.FC = () => {
             if (child.material instanceof THREE.MeshStandardMaterial || 
                 child.material instanceof THREE.MeshPhongMaterial ||
                 child.material instanceof THREE.MeshBasicMaterial) {
-              child.material.color.setHex(0x8FA3B8); // Muted blue-gray to match reference
+              child.material.color.setHex(0xB0C4DE); // Light blue-gray (LightSteelBlue)
             }
             child.material.needsUpdate = true;
           }
@@ -79,7 +79,7 @@ const SharkVisualization: React.FC = () => {
         {/* Pixelated post-processing effects */}
         <EffectComposer>
           <PixelShader 
-            pixelSize={6.0}
+            pixelSize={4.0}
             resolution={[size.width, size.height]}
           />
         </EffectComposer>

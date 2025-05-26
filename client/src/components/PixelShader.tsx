@@ -16,21 +16,20 @@ class PixelEffect extends Effect {
         // Sample the texture at the pixelated coordinates
         vec4 color = texture2D(inputBuffer, pixelatedUv);
         
-        // Apply stronger color quantization for retro pixelated look
-        color.rgb = floor(color.rgb * 8.0) / 8.0;
+        // Apply color quantization for more retro feel
+        color.rgb = floor(color.rgb * 12.0) / 12.0;
         
-        // Enhance contrast and brightness
-        color.rgb = pow(color.rgb, vec3(0.9));
-        color.rgb *= 1.1;
+        // Add slight contrast boost
+        color.rgb = pow(color.rgb, vec3(1.1));
         
         outputColor = color;
       }
     `;
 
     super('PixelEffect', fragmentShader, {
-      uniforms: new Map<string, THREE.Uniform>([
+      uniforms: new Map([
         ['pixelSize', new THREE.Uniform(pixelSize)],
-        ['resolution', new THREE.Uniform(new THREE.Vector2(resolution[0], resolution[1]))]
+        ['resolution', new THREE.Uniform(new THREE.Vector2(resolution[0], resolution[1]))],
       ])
     });
   }

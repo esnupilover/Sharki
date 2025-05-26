@@ -27,7 +27,7 @@ function App() {
         height: '100vh', 
         position: 'relative', 
         overflow: 'hidden', 
-        background: '#000',
+        background: '#ffffff',
         fontFamily: 'Inter, sans-serif'
       }}>
         <Canvas
@@ -48,7 +48,7 @@ function App() {
             gl.setPixelRatio(window.devicePixelRatio);
           }}
         >
-          <color attach="background" args={["#000000"]} />
+          <color attach="background" args={["#ffffff"]} />
           
           {/* Enhanced lighting setup for better model visibility */}
           <directionalLight 
@@ -93,14 +93,14 @@ function App() {
           position: 'absolute',
           top: '10px',
           left: '10px',
-          color: 'white',
+          color: 'black',
           fontFamily: 'Inter, sans-serif',
           fontSize: '14px',
-          background: 'rgba(0, 0, 0, 0.7)',
+          background: 'rgba(255, 255, 255, 0.9)',
           padding: '15px',
           borderRadius: '8px',
           pointerEvents: 'none',
-          border: '1px solid rgba(255, 255, 255, 0.2)'
+          border: '1px solid rgba(0, 0, 0, 0.2)'
         }}>
           <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>
             🦈 3D Pixelated Shark Visualization
@@ -121,14 +121,14 @@ function App() {
           position: 'absolute',
           bottom: '10px',
           right: '10px',
-          color: 'white',
+          color: 'black',
           fontFamily: 'Inter, sans-serif',
           fontSize: '12px',
-          background: 'rgba(0, 0, 0, 0.7)',
+          background: 'rgba(255, 255, 255, 0.9)',
           padding: '10px',
           borderRadius: '8px',
           pointerEvents: 'none',
-          border: '1px solid rgba(255, 255, 255, 0.2)',
+          border: '1px solid rgba(0, 0, 0, 0.2)',
           textAlign: 'right'
         }}>
           <div>Resize window to test responsiveness</div>

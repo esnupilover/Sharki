@@ -1,7 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
+import { EffectComposer } from '@react-three/postprocessing';
 import * as THREE from 'three';
+import PixelShader from './PixelShader';
 
 interface SharkGLTF {
   scene: THREE.Group;
@@ -12,6 +14,7 @@ interface SharkGLTF {
 const SharkVisualization: React.FC = () => {
   const sharkRef = useRef<THREE.Group>(null);
   const [modelLoaded, setModelLoaded] = useState(false);
+  const { size } = useThree();
   
   // Load the new shark model
   const sharkModel = useGLTF('/models/shark.glb') as SharkGLTF;
@@ -53,18 +56,28 @@ const SharkVisualization: React.FC = () => {
   // Show the real shark model when loaded, fallback otherwise
   if (modelLoaded && sharkModel?.scene) {
     return (
-      <group 
-        ref={sharkRef} 
-        position={[0, 0, 0]} 
-        scale={[2.5, 2.5, 2.5]}
-        rotation={[0, Math.PI, 0]}
-      >
-        <primitive 
-          object={sharkModel.scene.clone()} 
-          castShadow
-          receiveShadow
-        />
-      </group>
+      <>
+        <group 
+          ref={sharkRef} 
+          position={[0, 0, 0]} 
+          scale={[2.5, 2.5, 2.5]}
+          rotation={[0, Math.PI, 0]}
+        >
+          <primitive 
+            object={sharkModel.scene.clone()} 
+            castShadow
+            receiveShadow
+          />
+        </group>
+        
+        {/* Pixelated post-processing effects */}
+        <EffectComposer>
+          <PixelShader 
+            pixelSize={8.0}
+            resolution={[size.width, size.height]}
+          />
+        </EffectComposer>
+      </>
     );
   }
 

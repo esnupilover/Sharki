@@ -1,9 +1,40 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
+import { useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
+
+interface SharkGLTF {
+  scene: THREE.Group;
+  nodes: { [key: string]: THREE.Object3D };
+  materials: { [key: string]: THREE.Material };
+}
 
 const SharkVisualization: React.FC = () => {
   const sharkRef = useRef<THREE.Group>(null);
+  const [modelLoaded, setModelLoaded] = useState(false);
+  
+  // Load the new shark model
+  const sharkModel = useGLTF('/models/shark.glb') as SharkGLTF;
+
+  useEffect(() => {
+    if (sharkModel?.scene) {
+      console.log('✅ New shark model loaded successfully!');
+      
+      // Setup materials and shadows
+      sharkModel.scene.traverse((child) => {
+        if (child instanceof THREE.Mesh) {
+          child.castShadow = true;
+          child.receiveShadow = true;
+          
+          if (child.material instanceof THREE.Material) {
+            child.material.needsUpdate = true;
+          }
+        }
+      });
+      
+      setModelLoaded(true);
+    }
+  }, [sharkModel]);
 
   // Animation loop
   useFrame((state, delta) => {
@@ -19,6 +50,25 @@ const SharkVisualization: React.FC = () => {
     }
   });
 
+  // Show the real shark model when loaded, fallback otherwise
+  if (modelLoaded && sharkModel?.scene) {
+    return (
+      <group 
+        ref={sharkRef} 
+        position={[0, 0, 0]} 
+        scale={[2.5, 2.5, 2.5]}
+        rotation={[0, Math.PI, 0]}
+      >
+        <primitive 
+          object={sharkModel.scene.clone()} 
+          castShadow
+          receiveShadow
+        />
+      </group>
+    );
+  }
+
+  // Fallback geometric shark while loading
   return (
     <group ref={sharkRef} position={[0, 0, 0]}>
       {/* Main shark body */}

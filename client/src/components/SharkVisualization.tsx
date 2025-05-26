@@ -43,7 +43,7 @@ const SharkVisualization: React.FC = () => {
   useFrame((state, delta) => {
     if (sharkRef.current) {
       // Smooth rotation animation
-      sharkRef.current.rotation.y += delta * 0.5;
+      sharkRef.current.rotation.y += delta * 0.8;
       
       // Gentle floating motion
       sharkRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.8) * 0.3;

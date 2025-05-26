@@ -30,13 +30,11 @@ const SharkVisualization: React.FC = () => {
           child.receiveShadow = true;
           
           if (child.material instanceof THREE.Material) {
-            // Apply a lighter version of the original color
+            // Apply the custom color to any material that has a color property
             if (child.material instanceof THREE.MeshStandardMaterial || 
-                child.material instanceof THREE.MeshPhongMaterial) {
-              // Apply the custom color
-              child.material.color.setHex(0x859EB5); // Custom blue-gray
-              child.material.roughness = 0.3;
-              child.material.metalness = 0.1;
+                child.material instanceof THREE.MeshPhongMaterial ||
+                child.material instanceof THREE.MeshBasicMaterial) {
+              child.material.color.setHex(0x859EB5); // Custom blue-gray #859EB5
             }
             child.material.needsUpdate = true;
           }
@@ -51,7 +49,7 @@ const SharkVisualization: React.FC = () => {
   useFrame((state, delta) => {
     if (sharkRef.current) {
       // Smooth rotation animation
-      sharkRef.current.rotation.y += delta * 0.8;
+      sharkRef.current.rotation.y += delta * 1.2;
       
       // Gentle floating motion
       sharkRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.8) * 0.3;

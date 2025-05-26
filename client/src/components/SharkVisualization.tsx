@@ -34,7 +34,7 @@ const SharkVisualization: React.FC = () => {
             if (child.material instanceof THREE.MeshStandardMaterial || 
                 child.material instanceof THREE.MeshPhongMaterial ||
                 child.material instanceof THREE.MeshBasicMaterial) {
-              child.material.color.setHex(0x859EB5); // Custom blue-gray #859EB5
+              child.material.color.setHex(0x87A9C7); // Custom blue-gray #87A9C7
             }
             child.material.needsUpdate = true;
           }

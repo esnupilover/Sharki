@@ -33,8 +33,8 @@ const SharkVisualization: React.FC = () => {
             // Apply a lighter version of the original color
             if (child.material instanceof THREE.MeshStandardMaterial || 
                 child.material instanceof THREE.MeshPhongMaterial) {
-              // Make the material lighter and more vibrant
-              child.material.color.setHex(0x8BB8E8); // Light blue-gray
+              // Apply the custom color
+              child.material.color.setHex(0x859EB5); // Custom blue-gray
               child.material.roughness = 0.3;
               child.material.metalness = 0.1;
             }

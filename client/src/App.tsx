@@ -87,55 +87,7 @@ function App() {
             <SharkVisualization />
           </Suspense>
         </Canvas>
-        
-        {/* Debug info overlay */}
-        <div style={{
-          position: 'absolute',
-          top: '10px',
-          left: '10px',
-          color: 'black',
-          fontFamily: 'Inter, sans-serif',
-          fontSize: '14px',
-          background: 'rgba(255, 255, 255, 0.9)',
-          padding: '15px',
-          borderRadius: '8px',
-          pointerEvents: 'none',
-          border: '1px solid rgba(0, 0, 0, 0.2)'
-        }}>
-          <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>
-            🦈 3D Pixelated Shark Visualization
-          </div>
-          <div style={{ fontSize: '12px', opacity: 0.8 }}>
-            • Automatic rotation animation
-          </div>
-          <div style={{ fontSize: '12px', opacity: 0.8 }}>
-            • Retro pixel shader effects
-          </div>
-          <div style={{ fontSize: '12px', opacity: 0.8 }}>
-            • Loading shark model...
-          </div>
-        </div>
 
-
-
-        {/* Instructions overlay */}
-        <div style={{
-          position: 'absolute',
-          bottom: '10px',
-          right: '10px',
-          color: 'black',
-          fontFamily: 'Inter, sans-serif',
-          fontSize: '12px',
-          background: 'rgba(255, 255, 255, 0.9)',
-          padding: '10px',
-          borderRadius: '8px',
-          pointerEvents: 'none',
-          border: '1px solid rgba(0, 0, 0, 0.2)',
-          textAlign: 'right'
-        }}>
-          <div>Resize window to test responsiveness</div>
-          <div style={{ opacity: 0.6 }}>Powered by Three.js & React</div>
-        </div>
       </div>
     </QueryClientProvider>
   );

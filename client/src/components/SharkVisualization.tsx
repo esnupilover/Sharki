@@ -11,11 +11,7 @@ interface SharkGLTF {
   materials: { [key: string]: THREE.Material };
 }
 
-interface SharkVisualizationProps {
-  sharkColor?: string;
-}
-
-const SharkVisualization: React.FC<SharkVisualizationProps> = ({ sharkColor = '#4A90E2' }) => {
+const SharkVisualization: React.FC = () => {
   const sharkRef = useRef<THREE.Group>(null);
   const [modelLoaded, setModelLoaded] = useState(false);
   const { size } = useThree();
@@ -27,13 +23,21 @@ const SharkVisualization: React.FC<SharkVisualizationProps> = ({ sharkColor = '#
     if (sharkModel?.scene) {
       console.log('✅ New shark model loaded successfully!');
       
-      // Setup materials and shadows
+      // Setup materials and shadows with lighter color
       sharkModel.scene.traverse((child) => {
         if (child instanceof THREE.Mesh) {
           child.castShadow = true;
           child.receiveShadow = true;
           
           if (child.material instanceof THREE.Material) {
+            // Apply a lighter version of the original color
+            if (child.material instanceof THREE.MeshStandardMaterial || 
+                child.material instanceof THREE.MeshPhongMaterial) {
+              // Make the material lighter and more vibrant
+              child.material.color.setHex(0x8BB8E8); // Light blue-gray
+              child.material.roughness = 0.3;
+              child.material.metalness = 0.1;
+            }
             child.material.needsUpdate = true;
           }
         }
@@ -42,21 +46,6 @@ const SharkVisualization: React.FC<SharkVisualizationProps> = ({ sharkColor = '#
       setModelLoaded(true);
     }
   }, [sharkModel]);
-
-  // Update shark color when color prop changes
-  useEffect(() => {
-    if (sharkModel?.scene && modelLoaded) {
-      sharkModel.scene.traverse((child) => {
-        if (child instanceof THREE.Mesh) {
-          if (child.material instanceof THREE.MeshStandardMaterial || 
-              child.material instanceof THREE.MeshPhongMaterial) {
-            child.material.color.set(sharkColor);
-            child.material.needsUpdate = true;
-          }
-        }
-      });
-    }
-  }, [sharkColor, sharkModel, modelLoaded]);
 
   // Animation loop
   useFrame((state, delta) => {

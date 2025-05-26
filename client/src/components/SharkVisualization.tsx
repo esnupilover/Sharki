@@ -11,7 +11,11 @@ interface SharkGLTF {
   materials: { [key: string]: THREE.Material };
 }
 
-const SharkVisualization: React.FC = () => {
+interface SharkVisualizationProps {
+  sharkColor?: string;
+}
+
+const SharkVisualization: React.FC<SharkVisualizationProps> = ({ sharkColor = '#4A90E2' }) => {
   const sharkRef = useRef<THREE.Group>(null);
   const [modelLoaded, setModelLoaded] = useState(false);
   const { size } = useThree();
@@ -38,6 +42,21 @@ const SharkVisualization: React.FC = () => {
       setModelLoaded(true);
     }
   }, [sharkModel]);
+
+  // Update shark color when color prop changes
+  useEffect(() => {
+    if (sharkModel?.scene && modelLoaded) {
+      sharkModel.scene.traverse((child) => {
+        if (child instanceof THREE.Mesh) {
+          if (child.material instanceof THREE.MeshStandardMaterial || 
+              child.material instanceof THREE.MeshPhongMaterial) {
+            child.material.color.set(sharkColor);
+            child.material.needsUpdate = true;
+          }
+        }
+      });
+    }
+  }, [sharkColor, sharkModel, modelLoaded]);
 
   // Animation loop
   useFrame((state, delta) => {

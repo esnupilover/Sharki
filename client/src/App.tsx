@@ -1,7 +1,8 @@
 import { Canvas } from "@react-three/fiber";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import SharkVisualization from "./components/SharkVisualization";
+import ColorPalette from "./components/ColorPalette";
 import "@fontsource/inter";
 import "./index.css";
 
@@ -20,6 +21,8 @@ const queryClient = new QueryClient({
 });
 
 function App() {
+  const [sharkColor, setSharkColor] = useState('#4A90E2');
+
   return (
     <QueryClientProvider client={queryClient}>
       <div style={{ 
@@ -84,7 +87,7 @@ function App() {
               <meshBasicMaterial color="red" wireframe />
             </mesh>
           }>
-            <SharkVisualization />
+            <SharkVisualization sharkColor={sharkColor} />
           </Suspense>
         </Canvas>
         
@@ -115,6 +118,12 @@ function App() {
             • Loading shark model...
           </div>
         </div>
+
+        {/* Color Palette Selector */}
+        <ColorPalette 
+          onColorChange={setSharkColor}
+          currentColor={sharkColor}
+        />
 
         {/* Instructions overlay */}
         <div style={{

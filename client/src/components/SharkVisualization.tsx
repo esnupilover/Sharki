@@ -73,7 +73,7 @@ const SharkVisualization: React.FC = () => {
         {/* Pixelated post-processing effects */}
         <EffectComposer>
           <PixelShader 
-            pixelSize={8.0}
+            pixelSize={4.0}
             resolution={[size.width, size.height]}
           />
         </EffectComposer>
